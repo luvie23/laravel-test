@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->renameColumn('pending_at', 'under_review_at');
         });
     }
 
@@ -22,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->renameColumn('under_review_at', 'pending_at');
+        });
     }
 };
